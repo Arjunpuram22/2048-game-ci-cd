@@ -58,6 +58,7 @@ COPY . /usr/share/nginx/html
 
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
+```
 
 🧪 CodeBuild – buildspec.yml
 
@@ -65,6 +66,7 @@ This file drives the build, push to ECR, and creation of imagedefinitions.json f
 
 Replace <ACCOUNT_ID> with your AWS Account ID and ensure your ECS container name matches your task definition.
 
+```buildspec.yml
 version: 0.2
 
 phases:
@@ -90,3 +92,13 @@ phases:
 artifacts:
   files:
     - imagedefinitions.json
+```
+🔄 Proving CI/CD in Action
+	1.	✏️ Edited index.html — changed heading (e.g., “2048 by Arjun Puram”)
+	2.	💾 Committed & pushed the update to the GitHub main branch
+	3.	⚙️ Observed CodePipeline automatically running all 3 stages:
+	      •	Source ✅
+	      •	Build ✅
+	      •	Deploy ✅
+	4.	🌐 Verified ECS task restarted with the latest image
+	5.	🎯 Confirmed the updated site reflected live at the public IP
