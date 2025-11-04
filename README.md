@@ -60,6 +60,8 @@ EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
 ```
 
+---
+
 🧪 CodeBuild – buildspec.yml
 
 This file drives the build, push to ECR, and creation of imagedefinitions.json for ECS deployment.
@@ -93,6 +95,9 @@ artifacts:
   files:
     - imagedefinitions.json
 ```
+
+---
+
 🔄 Proving CI/CD in Action
 	1.	✏️ Edited index.html — changed heading (e.g., “2048 by Arjun Puram”)
 	2.	💾 Committed & pushed the update to the GitHub main branch
