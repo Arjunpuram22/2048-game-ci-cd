@@ -28,3 +28,65 @@ Deployed to an ECS Fargate task with a public IP (HTTP:80).
 ## 🖼️ Architecture
 
 ![CI/CD Architecture – 2048 Game](architecture.png)
+
+✅ Prerequisites
+
+Before deploying, ensure you have:
+
+- 🧑‍💻 **AWS Account** with IAM permissions for ECR, ECS, CodeBuild, and CodePipeline  
+- ⚙️ **AWS CLI** configured locally (`aws configure`) – e.g., region `us-east-1`  
+- 🐳 **Docker Desktop** installed for local testing  
+- 💾 **GitHub repository** (this one) connected to AWS CodePipeline  
+- 🏗️ **ECR repository** (e.g., `2048-game-repo`)  
+- ☁️ **ECS cluster & Fargate service** configured to run container (port 80)
+
+> **Security Note:** Avoid committing your AWS account ID or public IPs in a public repo.  
+> Use IAM roles and environment variables for sensitive configurations.
+
+---
+
+## 🧱 Dockerfile (Nginx)
+
+> Uses **AWS Public ECR Nginx** image to avoid Docker Hub rate limits.
+
+```dockerfile
+# Use AWS public ECR Nginx base image
+FROM public.ecr.aws/nginx/nginx:latest
+
+# Copy the static website into nginx web root
+COPY . /usr/share/nginx/html
+
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+
+🧪 CodeBuild – buildspec.yml
+
+This file drives the build, push to ECR, and creation of imagedefinitions.json for ECS deployment.
+
+Replace <ACCOUNT_ID> with your AWS Account ID and ensure your ECS container name matches your task definition.
+
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com
+
+  build:
+    commands:
+      - echo Building the Docker image...
+      - docker build -t 2048-game .
+      - echo Tagging the Docker image...
+      - docker tag 2048-game:latest <ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/2048-game-repo:latest
+
+  post_build:
+    commands:
+      - echo Pushing the Docker image to Amazon ECR...
+      - docker push <ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/2048-game-repo:latest
+      - echo Creating imagedefinitions.json for ECS deployment...
+      - printf '[{"name":"2048-container","imageUri":"%s"}]' "<ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/2048-game-repo:latest" > imagedefinitions.json
+
+artifacts:
+  files:
+    - imagedefinitions.json
