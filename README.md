@@ -99,11 +99,16 @@ artifacts:
 ---
 
 ## 🔄 Proving CI/CD in Action
-	1.	✏️ Edited index.html — changed heading (e.g., “2048 by Arjun Puram”)
-	2.	💾 Committed & pushed the update to the GitHub main branch
-	3.	⚙️ Observed CodePipeline automatically running all 3 stages:
-	      •	Source ✅
-	      •	Build ✅
-	      •	Deploy ✅
-	4.	🌐 Verified ECS task restarted with the latest image
-	5.	🎯 Confirmed the updated site reflected live at the public IP
+
+To validate the end-to-end CI/CD pipeline, I performed the following steps:
+
+1. ✏️ **Edited `index.html`** — changed the game heading to _“2048 by Arjun Puram”_ to simulate a code update.  
+2. 💾 **Committed and pushed** the change to the GitHub `main` branch.  
+3. ⚙️ **Observed AWS CodePipeline** automatically execute all three stages:
+   - **Source** ✅  
+   - **Build** ✅  
+   - **Deploy** ✅  
+4. 🌐 **Verified ECS Fargate task restarted** with the newly built Docker image.  
+5. 🎯 **Confirmed the updated website** was live at the public IP, reflecting the latest code changes.
+
+> Each code push automatically triggers the build and deployment process — demonstrating a fully automated CI/CD workflow.
