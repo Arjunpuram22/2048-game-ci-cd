@@ -112,3 +112,49 @@ To validate the end-to-end CI/CD pipeline, I performed the following steps:
 5. 🎯 **Confirmed the updated website** was live at the public IP, reflecting the latest code changes.
 
 > Each code push automatically triggers the build and deployment process — demonstrating a fully automated CI/CD workflow.
+
+---
+
+## ✅ Results – Successful CI/CD Deployment
+
+This section visually demonstrates the **successful completion of the end-to-end CI/CD pipeline** for the 2048 Game on AWS.
+
+---
+
+### 🧩 1. CodePipeline Execution – Success
+The pipeline was triggered by a code push to GitHub, and all three stages — Source, Build, and Deploy — completed successfully.
+
+![Pipeline Success](docs/pipeline_success.png)
+
+---
+
+### 🏗️ 2. CodeBuild Project – Build Completed
+AWS CodeBuild successfully built and pushed the Docker image to Amazon ECR, as shown below.
+
+![Build Project](docs/buildproject.png)
+
+---
+
+### 🚀 3. ECS Deployment – Live Application Running
+The ECS service pulled the latest image from ECR and deployed it on Fargate, resulting in a live, running application.
+
+![Live App](docs/liveapp.png)
+
+---
+
+> 🏁 **Final Verification:**  
+> The deployed 2048 Game is now live and accessible via the ECS Task’s Public IP on port 80, confirming the fully automated pipeline.
+
+---
+
+## 🏆 Project Outcome
+
+This project successfully demonstrates:
+- Full CI/CD workflow automation using **AWS CodePipeline**, **CodeBuild**, **ECR**, and **ECS Fargate**
+- Continuous integration triggered by GitHub commits
+- Seamless container deployment with zero manual intervention
+- Production-ready architecture for scalable web apps
+
+---
+
+📌 **Repository:** [2048 Game CI/CD on AWS](https://github.com/Arjunpuram22/2048-game-ci-cd)
