@@ -1,4 +1,4 @@
-# 🎮 2048 Game – CI/CD on AWS (CodePipeline → CodeBuild → ECR → ECS Fargate)
+# 🎮 Build a CI/CD Pipeline for the 2048 Game using AWS CodePipeline, ECS, and ECR
 
 A **production-grade CI/CD pipeline** that builds, containerizes, and deploys the classic **2048 web game** to **AWS ECS Fargate**, with container images stored in **Amazon ECR** and builds triggered automatically from **GitHub pushes** using **AWS CodePipeline** and **CodeBuild**.
 
